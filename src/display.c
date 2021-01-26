@@ -657,7 +657,10 @@ init_display(void)
 	 * Without this change <c-down> could return a keycode value of 531
 	 * (terminfo name kDN5), which is larger than KEY_MAX and has no
 	 * pre-defined curses key name.
-	 * NOTE: this MUST be called before initscr() */
+	 * NOTE: this MUST be called before initscr()
+	 * NOTE: this also may break mouse support in many terminals, as
+	 * kmous can no longer be queried when use_extended_names(false) is
+	 * called. */
 	use_extended_names(false);
 #endif
 
