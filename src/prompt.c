@@ -1086,6 +1086,17 @@ run_prompt_command(struct view *view, const char *argv[])
 			report("%s", get_status_message(code));
 		return REQ_NONE;
 
+	} else if (!strcmp(cmd, "q")) {
+		return REQ_QUIT;
+	} else if (!strcmp(cmd, "q!")) {
+		return REQ_QUIT;
+	} else if (!strcmp(cmd, "qu")) {
+		return REQ_QUIT;
+	} else if (!strcmp(cmd, "qui")) {
+		return REQ_QUIT;
+	} else if (!strcmp(cmd, "exit")) {
+		return REQ_QUIT;
+
 	} else {
 		struct key key = {{0}};
 		enum status_code code;
