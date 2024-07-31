@@ -193,6 +193,7 @@ move_view(struct view *view, enum request request)
 {
 	int scroll_steps = 0;
 	int steps;
+	int voffset;
 
 	switch (request) {
 	case REQ_MOVE_FIRST_LINE:
@@ -214,13 +215,43 @@ move_view(struct view *view, enum request request)
 		break;
 
 	case REQ_MOVE_HALF_PAGE_UP:
-		steps = view->height / 2 > view->pos.lineno
-		      ? -view->pos.lineno : -(view->height / 2);
+		// steps = view->height / 2 > view->pos.lineno
+		//       ? -view->pos.lineno : -(view->height / 2);
+		if (view->pos.lineno <= (view->height / 2))
+		{
+			steps = -view->pos.lineno;
+			break;
+		}
+		voffset = view->pos.lineno - view->pos.offset;
+		if (voffset > (view->height / 2))
+		{
+		    steps = -(voffset - (view->height / 2));
+		}
+		else
+		{
+		    steps = -(view->height / 2);
+			steps--;
+		}
 		break;
 
 	case REQ_MOVE_HALF_PAGE_DOWN:
-		steps = view->pos.lineno + view->height / 2 >= view->lines
-		      ? view->lines - view->pos.lineno - 1 : view->height / 2;
+		// steps = view->pos.lineno + view->height / 2 >= view->lines
+		//       ? view->lines - view->pos.lineno - 1 : view->height / 2;
+		if ( (view->pos.lineno + (view->height / 2)) >= view->lines)
+		{
+            steps = view->lines - view->pos.lineno - 1;
+			break;
+		}
+		voffset = view->pos.lineno - view->pos.offset;
+		if (voffset < (view->height / 2))
+		{
+		    steps = (view->height / 2) - voffset;
+		}
+		else
+		{
+		    steps = (view->height / 2);
+			steps++;
+		}
 		break;
 
 	case REQ_MOVE_WHEEL_DOWN:
@@ -1857,4 +1888,4 @@ get_view(int i)
 	return 0 <= i && i < ARRAY_SIZE(views) ? views[i] : NULL;
 }
 
-/* vim: set ts=8 sw=8 noexpandtab: */
+/* vim: set ts=4 sw=4 noexpandtab: */
