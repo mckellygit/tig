@@ -1087,14 +1087,16 @@ run_prompt_command(struct view *view, const char *argv[])
 		return REQ_NONE;
 
 	} else if (!strcmp(cmd, "q")) {
-		return REQ_QUIT;
+		return REQ_VIEW_CLOSE;
 	} else if (!strcmp(cmd, "q!")) {
 		return REQ_QUIT;
 	} else if (!strcmp(cmd, "qu")) {
-		return REQ_QUIT;
+		return REQ_VIEW_CLOSE;
 	} else if (!strcmp(cmd, "qui")) {
-		return REQ_QUIT;
+		return REQ_VIEW_CLOSE;
 	} else if (!strcmp(cmd, "exit")) {
+		return REQ_QUIT;
+	} else if (!strcmp(cmd, "cquit")) {
 		return REQ_QUIT;
 
 	} else {
